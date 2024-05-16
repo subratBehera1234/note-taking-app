@@ -30,10 +30,7 @@
 						
 						<form action="register" method="post">
 						
-							<div class="mb-3">
-								<label class="form-label">Id</label> <input name="id"
-									type="tel" class="form-control" required>
-							</div>
+						
 							<div class="mb-3">
 								<label class="form-label">Name</label> <input name="name"
 									type="text" class="form-control" required>

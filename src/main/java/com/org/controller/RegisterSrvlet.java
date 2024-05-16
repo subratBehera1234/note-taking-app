@@ -17,18 +17,18 @@ public class RegisterSrvlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id=request.getParameter("id");
+		
 		String name =request.getParameter("name");
 		String age =request.getParameter("age");
 		String mobile =request.getParameter("mobile");
 		String email =request.getParameter("email");
 		String password=request.getParameter("password");
-		int id1=Integer.parseInt(id);
+	
 		int age1=Integer.parseInt(age);
 		long mobile1=Long.parseLong(mobile);
 		
 		User user=new User();
-		user.setId(id1);
+		
 		user.setName(name);
 		user.setAge(age1);
 		user.setMobile(mobile1);

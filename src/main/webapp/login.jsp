@@ -33,10 +33,7 @@
 							}
 							%>
 						<form action="login" method="post">
-						<div class="mb-3">
-								<label class="form-label">Id</label> <input
-									name="id" type="tel" class="form-control" required>
-							</div>
+						
 							<div class="mb-3">
 								<label class="form-label">Email Address</label> <input
 									name="email" type="email" class="form-control" required>

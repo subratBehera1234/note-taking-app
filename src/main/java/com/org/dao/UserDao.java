@@ -24,18 +24,18 @@ public class UserDao {
 		
 	}
 	
-	public User fetchUserById(int id) {
+	public User fetchUserByEmailAndPassword(String email,String password) {
 		EntityManagerFactory emf=Persistence.createEntityManagerFactory("subrat");
 		EntityManager em=emf.createEntityManager();
 		
-		Query query=em.createQuery("select u from User u where u.id=?1");
-		query.setParameter(1, id);
+		Query query=em.createQuery("select u from User u where u.email=?1 and password=?2");
+		query.setParameter(1, email);
+		query.setParameter(2, password);
 		List <User>list=query.getResultList();
 		
 		if(list !=null) {
-			for(User u :list) {
-				return u;
-			}
+			
+				return list.get(0);
 		}
 		return null;
 	}

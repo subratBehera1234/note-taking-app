@@ -17,12 +17,10 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email=request.getParameter("email");
-		String password=request.getParameter("password");
-		String id=request.getParameter("id");
-		int id1=Integer.parseInt(id);
+		String password=request.getParameter("password"); 
 		
 		UserDao dao=new UserDao();
-		User user=dao.fetchUserById(id1);
+		User user=dao.fetchUserByEmailAndPassword(email,password);
 		HttpSession session=request.getSession();
 		if(user!=null) {
 			session .setAttribute("userObj", user);
