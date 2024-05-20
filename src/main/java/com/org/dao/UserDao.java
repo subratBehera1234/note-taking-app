@@ -34,10 +34,16 @@ public class UserDao {
 		List <User>list=query.getResultList();
 		
 		if(list !=null) {
-			
-				return list.get(0);
+			for(User u :list) {
+				return u;
+			}
 		}
-		return null;
+	return null;
+//		if(list !=null) {
+//			
+//				return list.get(0);
+//		}
+//		return null;
 	}
 	public List<User> fetchAllUser(){
 		

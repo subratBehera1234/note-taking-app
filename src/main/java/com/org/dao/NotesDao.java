@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServlet;
@@ -16,14 +17,8 @@ public class NotesDao{
 		
 		EntityManagerFactory emf=Persistence.createEntityManagerFactory("subrat");
 		EntityManager em=emf.createEntityManager();
-		Query query=em.createQuery("select n from Note n where n.id=?1");
-		List<Note>list=query.getResultList();
-		if(list !=null) {
-			for(Note n:list) {
-				return n;
-			}
-		}
-		return null;
+		
+		return em.find(Note.class, id);
 	}
 	
 	public List<Note> fetchAllNotes(){
@@ -36,5 +31,17 @@ public class NotesDao{
 			return list;
 		}
 		return null;
+	}
+	
+	public void deleteNoteById(int id) {
+		
+		EntityManagerFactory emf=Persistence.createEntityManagerFactory("subrat");
+		EntityManager em=emf.createEntityManager();
+		EntityTransaction et=em.getTransaction();
+		Note n=em.find(Note.class, id);
+		et.begin();
+		em.remove(n);
+		et.commit();
+		
 	}
 }
