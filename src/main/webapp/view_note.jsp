@@ -1,3 +1,4 @@
+<%@page import="com.org.dao.UserDao"%>
 <%@page import="com.org.dao.NotesDao"%>
 <%@page import="com.org.dto.Note"%>
 <%@page import="java.util.List"%>
@@ -17,7 +18,9 @@
 </style>
 </head>
 <body>
-<% User sessionUser =(User) session.getAttribute("userObj");
+<% int userId =(Integer) session.getAttribute("userId");
+UserDao dao=new UserDao();
+User sessionUser=dao.fetchUserById(userId);
 	if(sessionUser==null){
 		response.sendRedirect("login.jsp");
 	}
@@ -25,8 +28,8 @@
 		
 %>
 	<%int id=Integer.parseInt(request.getParameter("id"));
-						NotesDao dao=new NotesDao();
-						 Note n= dao.fetchNoteById(id);
+						NotesDao Notedao=new NotesDao();
+						 Note n= Notedao.fetchNoteById(id);
 						%>
 <%@ include file="components/homeNavbar.jsp"%>
 

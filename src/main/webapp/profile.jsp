@@ -10,17 +10,15 @@
 <%@ include file="components/bootstrap-css.jsp" %>
 </head>
 <body>
-<% User sessionUser =(User) session.getAttribute("userObj");
+<% int userId =(Integer) session.getAttribute("userId");
+UserDao dao =new UserDao();
+User sessionUser=dao.fetchUserById(userId);
 	if(sessionUser==null){
 		response.sendRedirect("login.jsp");
 	}
 	else{
 		
 		
-		int id=sessionUser.getId();
-		
-		UserDao dao =new UserDao();
-	//	User user =dao.fetchUserById(id);
 		%>
 		<%@ include file="components/homeNavbar.jsp" %>
 			<div class="container p-5">
@@ -48,7 +46,7 @@
 									name="email" type="email" class="form-control" value="<%=sessionUser.getEmail() %>" required>
 							</div>
 								
-								<input type="hidden" name="id" value="<%= id %>">
+								<input type="hidden" name="id" value="<%= userId %>">
 							<button type="submit" class="btn bg-primary text-white col-md-12">Update</button>
 						</form>
 

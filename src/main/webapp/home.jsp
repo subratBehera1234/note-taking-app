@@ -14,14 +14,14 @@
 </head>
 <body>
 
-<% User sessionUser =(User) session.getAttribute("userObj");
-	if(sessionUser==null){
+<% int userId =(Integer)session.getAttribute("userId");
+	if(userId==0){
 		response.sendRedirect("login.jsp");
 	}
 	else{
 %>
 <%@ include file="components/homeNavbar.jsp" %>
-<h1 class=" text-center text-success">Welcome To MoNotes</h1>
+<h1 class=" text-center text-success">Welcome To My Notes</h1>
 
 <% String msg=(String) session.getAttribute("success"); 
 						if(msg !=null){
@@ -30,7 +30,8 @@
 							<% session.removeAttribute("success"); } %>
 						
 						<%
-						User user=(User)session.getAttribute("userObj");
+						UserDao dao=new UserDao();
+						User user=dao.fetchUserById(userId);
 						List<Note>list=user.getNotesList();
 						%>
 		

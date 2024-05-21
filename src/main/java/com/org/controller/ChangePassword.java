@@ -20,10 +20,12 @@ public class ChangePassword extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session=request.getSession();
-		User user=(User)session.getAttribute("userObj");
+		int id=(Integer)session.getAttribute("userId");
+		UserDao dao=new UserDao();
+		User user=dao.fetchUserById(id);
 		String userPwd=user.getPassword();
 		List<Note>list=user.getNotesList();
-		int id=Integer.parseInt(request.getParameter("id"));
+		
 		String oldPwd=request.getParameter("password");
 		String pwd1=request.getParameter("password1");
 		String pwd2=request.getParameter("password2");
@@ -31,7 +33,6 @@ public class ChangePassword extends HttpServlet{
 		if(userPwd.equals(oldPwd) && pwd1.equals(pwd2)) {
 			
 			user.setPassword(pwd2);
-			UserDao dao=new UserDao();
 			dao.saveAndUpdateUser(user);
 			
 			response.sendRedirect("home.jsp");

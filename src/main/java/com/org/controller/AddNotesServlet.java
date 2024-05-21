@@ -26,17 +26,18 @@ public class AddNotesServlet extends HttpServlet{
 		Note note=new Note();
 		note.setTitle(title);
 		note.setDescription(description);
+		UserDao dao=new UserDao();
 		
 		HttpSession session =request.getSession();
-		User user=(User) session.getAttribute("userObj");
-		
+		int userId=(Integer) session.getAttribute("userId");
+		User user=dao.fetchUserById(userId);
 		List<Note>list=new ArrayList<>();
 		list.add(note);
 		
 		user.setNotesList(list);
 		note.setUser(user);
 		
-		UserDao dao=new UserDao();
+		
 		dao.saveAndUpdateUser(user);
 		
 		session.setAttribute("success", "Notes Added Successfully");

@@ -10,9 +10,13 @@ import javax.persistence.Query;
 import javax.servlet.http.HttpServlet;
 
 import com.org.dto.Note;
+import com.org.dto.User;
 
 public class NotesDao{
 
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("subrat");
+	EntityManager em=emf.createEntityManager();
+	EntityTransaction et=em.getTransaction();
 	public Note fetchNoteById(int id) {
 		
 		EntityManagerFactory emf=Persistence.createEntityManagerFactory("subrat");
@@ -23,8 +27,7 @@ public class NotesDao{
 	
 	public List<Note> fetchAllNotes(){
 		
-		EntityManagerFactory emf=Persistence.createEntityManagerFactory("subrat");
-		EntityManager em=emf.createEntityManager();
+		
 		Query query=em.createQuery("select n from Note n");
 		List<Note> list=query.getResultList();
 		if(list !=null) {
@@ -34,13 +37,20 @@ public class NotesDao{
 	}
 	
 	public void deleteNoteById(int id) {
+		Note notes=em.find(Note.class, id);
 		
-		EntityManagerFactory emf=Persistence.createEntityManagerFactory("subrat");
-		EntityManager em=emf.createEntityManager();
-		EntityTransaction et=em.getTransaction();
-		Note n=em.find(Note.class, id);
+		User user=notes.getUser();
+		List<Note>list=user.getNotesList();
+		
+		for(Note n:list) {
+			if(n.getNoteId()==id) {
+				list.remove(n);
+				break;
+			}
+		}
 		et.begin();
-		em.remove(n);
+		em.remove(notes);
+		em.merge(user);
 		et.commit();
 		
 	}

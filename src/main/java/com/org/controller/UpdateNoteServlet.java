@@ -31,15 +31,18 @@ public class UpdateNoteServlet extends HttpServlet{
 		note.setNoteId(id);
 		
 		HttpSession session =request.getSession();
-		User user=(User) session.getAttribute("userObj");
+		UserDao dao=new UserDao();
 		
-		List<Note>list=user.getNotesList();
+		int userId=(Integer) session.getAttribute("userId");
+		User user=dao.fetchUserById(userId);
+		
+		List<Note>list=new ArrayList<>();
 		list.add(note);
 		
 		user.setNotesList(list);
 		note.setUser(user);
 		
-		UserDao dao=new UserDao();
+	
 		dao.saveAndUpdateUser(user);
 		
 		session.setAttribute("success", "Notes Updaed Successfully");

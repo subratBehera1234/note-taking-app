@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 		User user=dao.fetchUserByEmailAndPassword(email,password);
 		HttpSession session=request.getSession();
 		if(user!=null) {
-			session .setAttribute("userObj", user);
+			session .setAttribute("userId", user.getId());
 			response.sendRedirect("home.jsp");
 			
 		}

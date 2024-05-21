@@ -9,7 +9,9 @@
 <title>Insert title here</title>
 <%@ include file="components/bootstrap-css.jsp" %>
 </head>
-<% User sessionUser =(User) session.getAttribute("userObj");
+<% int userId =(Integer) session.getAttribute("userId");
+UserDao dao=new UserDao();
+User sessionUser=dao.fetchUserById(userId);
 	if(sessionUser==null){
 		response.sendRedirect("login.jsp");
 	}

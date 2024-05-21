@@ -28,24 +28,26 @@ public class UpdateUserServlet extends HttpServlet{
 		String email =request.getParameter("email");
 		
 		HttpSession session =request.getSession();
-		User user=(User) session.getAttribute("userObj");
+		UserDao dao=new UserDao();
+		int userId=(Integer) session.getAttribute("userId");
+		User user=dao.fetchUserById(userId);
 		
 		Note note=new Note();
-		User updatedUser=new User();
-		updatedUser.setId(id);
-		updatedUser.setName(name);
-		updatedUser.setAge(age);
-		updatedUser.setMobile(mobile);
-		updatedUser.setEmail(email);
-		updatedUser.setPassword(user.getPassword());
+	
+		user.setId(userId);
+		user.setName(name);
+		user.setAge(age);
+		user.setMobile(mobile);
+		user.setEmail(email);
+		user.setPassword(user.getPassword());
 		
 		List<Note>list=user.getNotesList();
 		
 		user.setNotesList(list);
-		note.setUser(updatedUser);
+		note.setUser(user);
 		
-		UserDao dao=new UserDao();
-		dao.saveAndUpdateUser(updatedUser);
+	
+		dao.saveAndUpdateUser(user);
 		
 		session.setAttribute("success", "User Updated Successfully");
 		response.sendRedirect("home.jsp");
